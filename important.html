@@ -1,0 +1,242 @@
+<!--
+  File: mama_surprise.html
+  Open this file in Visual Studio / Visual Studio Code.
+  - Replace the placeholder image at <img id="hero-img"> with your mama's photo (keep filename or update src).
+  - Save and open with Live Server or open directly in browser.
+  - Dark themed tribute with extra animations and fun effects to make her smile.
+-->
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>imporant</title>
+  <style>
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --accent:#f59e0b;
+      --muted:#9aa4b2;
+      --glass: rgba(255,255,255,0.03);
+      --max-width:940px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:Inter,system-ui,Arial,Helvetica;line-height:1.4;background:linear-gradient(180deg,#061226 0%, #0f2740 100%);color:#e6eef6;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:40px}
+    .wrap{width:100%;max-width:var(--max-width);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:20px;padding:28px;box-shadow:0 12px 40px rgba(2,6,23,0.7);backdrop-filter:blur(6px);position:relative;overflow:hidden}
+
+    header{display:flex;gap:22px;align-items:center;margin-top:90px;}
+    .hero-img{width:160px;height:160px;border-radius:16px;object-fit:cover;border:5px solid rgba(255,255,255,0.06);box-shadow:0 10px 30px rgba(2,6,23,0.7);transform:translateY(0);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+    .hero-img.float{animation:float 4s ease-in-out infinite}
+
+    @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-10px)}100%{transform:translateY(0)}}
+
+    h1{font-size:30px;margin:0}
+    p.lead{color:var(--muted);margin:8px 0 0}
+
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px}
+    .card{background:var(--card);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 8px 24px rgba(2,6,23,0.5);transform:translateY(10px);opacity:0}
+    .card.show{transform:translateY(0);opacity:1}
+    .card h3{margin:0 0 8px}
+    .card p{margin:0;color:var(--muted)}
+
+    .button{display:inline-block;margin-top:12px;padding:10px 16px;border-radius:12px;background:linear-gradient(90deg,var(--accent),#f97316);color:#07101a;font-weight:800;text-decoration:none;cursor:pointer;border:none;letter-spacing:.6px}
+
+    .footer{margin-top:18px;text-align:center;color:var(--muted);font-size:13px}
+
+    /* small devices */
+    @media(max-width:780px){
+      header{flex-direction:column;align-items:flex-start}
+      .grid{grid-template-columns:1fr}
+      .hero-img{width:120px;height:120px}
+      h1{font-size:22px}
+    }
+
+    /* Confetti-ish particles (improved) */
+    .particle{position:absolute;width:12px;height:12px;border-radius:3px;opacity:0;pointer-events:none;will-change:transform,opacity}
+
+    /* typed message */
+    .typed{font-family:Georgia, 'Times New Roman', serif;font-size:18px;color:#ffdca8;margin-top:12px;min-height:60px}
+
+    /* signature handwritten */
+    .signature{font-family: 'Brush Script MT', cursive;font-size:20px;color:#ffdca8;margin-top:12px;opacity:0;transform:translateY(8px);transition:all .6s ease}
+
+    /* subtle hover tilt */
+    .card:hover{transform:translateY(-6px) scale(1.02);transition:transform .25s ease}
+
+    /* glowing halo around image */
+    .hero-glow{position:absolute;width:380px;height:380px;border-radius:50%;left:-60px;top:-90px;background:radial-gradient(circle at 30% 30%, rgba(245,158,11,0.12), transparent 30%), radial-gradient(circle at 70% 70%, rgba(249,115,22,0.08), transparent 35%);filter:blur(30px);pointer-events:none}
+
+    /* little hearts */
+    .heart{position:absolute;width:14px;height:14px;background:transparent;pointer-events:none}
+    .heart:before,.heart:after{content:'';position:absolute;width:8px;height:12px;background:#ff6b81;border-radius:8px 8px 0 0;transform:rotate(-45deg);top:0;left:3px}
+    .heart:after{left:0;transform:rotate(45deg)}
+
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <header>
+      <!-- Replace src with a real photo file (e.g. mama.jpg). If you don't have one, keep the placeholder. -->
+      <img id="hero-img" class="hero-img float" src="Studio_Ghibli-style_apologetic_face_-_front_facing,_sad_with_slight_smile,_dreamy_aesthetic.png" alt="Mama photo">
+      <div style="margin-top:6px">
+        <h1>~Sorry~</h1>
+        <p class="lead">jb sabd khrab hote h , tb shyd ek choti website apko mana skti h . Thank you for everything — this one's for you.</p>
+        <div style="margin-top:10px">
+          <button class="button" id="revealBtn">Open Message</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="grid" id="content" style="margin-top:18px;">
+      <div class="card" id="c1">
+        <h3>kya maine sekha</h3>
+        <p>“Aap ke sad face ne kl mughe samajhaya ki kb ky bolna chahiye aur sahi galat ka fark sikhaya.maine dil se bilkul nhi kaha tha but
+Galti meri thi — aur maine usse bahut kuch seekha.”</p>
+      </div>
+      <div class="card" id="c2">
+        <h3>kya mughe acha lga</h3>
+        <p>“Aapka support hi mere glti ko sudharne ki takat deta h .
+Ye chhota sa page sirf itna batane ke liye hai ki main better ban raha hoon.
+mughe ye v pta h ki aap hm sb se pehle jitna pyaar krte the ab v utna hi krte ho aur aage v krte rehna ..”</p>
+      </div>
+
+      <div class="card" id="c3">
+        <h3>Message for Mama</h3>
+        <p id="m-msg">“Mama, us din jo hua uska mujhe afsos hai.
+Main aapse bahut pyaar karta hoon.i am sorry , 
+Aapko proud feel karwana hi mera next surprise hoga.” 👊</p>
+      </div>
+      <div class="card" id="c4">
+        <h3>Moments</h3>
+        <p>“Chai ke saath wali baatein, aapki daant me chhupa pyaar,
+aur hum dono ki hasi — ye sab mere liye sabse khoobsurat pal hain.”</p>
+      </div>
+    </div>
+
+    <div style="margin-top:18px">
+      <div class="typed" id="typed"></div>
+      <div class="signature" id="sig">— with love, your beta (kunal)</div>
+    </div>
+
+    <div class="footer">
+      <small>made by kunal ghosh @visualstudiocode.</small>
+    </div>
+  </div>
+
+  <!-- JS for reveal + confetti particles + typed text + sound + hearts -->
+  <script>
+    const btn = document.getElementById('revealBtn');
+    const contentCards = [document.getElementById('c1'),document.getElementById('c2'),document.getElementById('c3'),document.getElementById('c4')];
+    const typedEl = document.getElementById('typed');
+    const sig = document.getElementById('sig');
+
+    btn.addEventListener('click', ()=>{
+      btn.disabled = true;
+      btn.innerText = 'Opened ✓';
+      // stagger reveal cards
+      contentCards.forEach((c,i)=>setTimeout(()=>c.classList.add('show'), i*220));
+      // launch confetti
+      launchParticles();
+      // play chime
+      playChime();
+      // start typed message
+      startTyped();
+      // signature pop
+      setTimeout(()=>{sig.style.opacity=1;sig.style.transform='translateY(0)';},1400);
+      // small hearts
+      spawnHearts(6);
+      // image little bounce
+      const img = document.getElementById('hero-img');
+      img.animate([{transform:'translateY(0)'},{transform:'translateY(-12px)'},{transform:'translateY(0)'}],{duration:900,easing:'ease-out'});
+    });
+
+    // confetti-ish particles
+    function launchParticles(){
+      const colors = ['#F59E0B','#FB923C','#F97316','#60A5FA','#7C3AED','#34D399','#FFDCA8','#FF6B81'];
+      for(let i=0;i<28;i++){
+        const p = document.createElement('div');
+        p.className='particle';
+        document.body.appendChild(p);
+        p.style.background = colors[Math.floor(Math.random()*colors.length)];
+        p.style.left = (50 + (Math.random()-0.5)*40) + '%';
+        p.style.top = '20%';
+        p.style.borderRadius = (Math.random()>0.7)?'50%':'8px';
+        const dx = (Math.random()-0.5)*220;
+        const dy = 260 + Math.random()*260;
+        const rot = Math.random()*720;
+        p.animate([
+          {transform:'translate(0,0) rotate(0deg)', opacity:1},
+          {transform:`translate(${dx}px, ${dy}px) rotate(${rot}deg)`, opacity:0}
+        ],{duration:1200+Math.random()*1200,easing:'cubic-bezier(.2,.8,.2,1)'});
+        setTimeout(()=>p.remove(),2600);
+      }
+    }
+
+    // typed effect (nice little message)
+    const message = "Mama — I'm sorry. maine gussa kiya,ummed h aap v mughe maaf kr denge . Thank you for being patient. This time, the surprise is for you.";
+    function startTyped(){
+      typedEl.innerHTML='';
+      let i=0;
+      const t = setInterval(()=>{
+        typedEl.innerHTML += message[i];
+        i++;
+        if(i>=message.length) clearInterval(t);
+      },32);
+    }
+
+    // play a soft chime via WebAudio
+    function playChime(){
+      try{
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.type='sine';
+        o.frequency.setValueAtTime(440,ctx.currentTime);
+        o.connect(g);
+        g.connect(ctx.destination);
+        g.gain.setValueAtTime(0,ctx.currentTime);
+        g.gain.linearRampToValueAtTime(0.08, ctx.currentTime + 0.02);
+        o.frequency.exponentialRampToValueAtTime(660, ctx.currentTime + 0.35);
+        g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1.0);
+        o.start();
+        o.stop(ctx.currentTime + 1.05);
+      }catch(e){/* autoplay might be blocked */}
+    }
+
+    // spawn little hearts that float up
+    function spawnHearts(n){
+      for(let i=0;i<n;i++){
+        const h = document.createElement('div');
+        h.className='heart';
+        document.body.appendChild(h);
+        const left = 36 + Math.random()*40;
+        h.style.left = left + '%';
+        h.style.top = 55 + Math.random()*20 + '%';
+        h.style.opacity = 1;
+        const dx = (Math.random()-0.5)*80;
+        const dy = -180 - Math.random()*120;
+        h.animate([
+          {transform:'translate(0,0) scale(1)', opacity:1},
+          {transform:`translate(${dx}px, ${dy}px) scale(.6) rotate(${Math.random()*60}deg)`, opacity:0}
+        ],{duration:1600+Math.random()*800,easing:'cubic-bezier(.2,.8,.2,1)'});
+        setTimeout(()=>h.remove(),2600);
+      }
+    }
+
+    // small accessibility: pressing Enter when button focused triggers
+    btn.addEventListener('keyup', (e)=>{ if(e.key==='Enter') btn.click(); });
+
+    // make image pulse slightly on hover
+    const hero = document.getElementById('hero-img');
+    hero.addEventListener('mouseenter', ()=>hero.style.transform='scale(1.02)');
+    hero.addEventListener('mouseleave', ()=>hero.style.transform='scale(1)');
+
+    // small keyboard shortcut: press 's' to reveal silently
+    document.addEventListener('keydown', (e)=>{ if(e.key.toLowerCase()==='s' && !btn.disabled){ btn.click(); }});
+
+  </script>
+</body>
+</html>
